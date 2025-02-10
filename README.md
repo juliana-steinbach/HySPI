@@ -71,7 +71,9 @@ where:
 
 - E_elec, total = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
 - E_elec, direct PV = electricity directly consumed by the electrolyzer from PV (instantaneous consumption)  
-- E_PV, total = total yearly PV electricity production  
+- E_PV, total = total yearly PV electricity production
+- H_grid is the electricity **taken from the grid** under an hourly time allocation
+- H_not claimed is the **surplus PV electricity** not used by the electrolyzer (can be stored or sold). 
 
 If the electrolyzer needs more electricity than what PV directly provides, the grid supplies the difference. Any excess PV electricity that is not used directly is **not claimed**.
 
@@ -104,7 +106,11 @@ $$ M_{\text{grid}} = E_{\text{elec, total}} - M_{\text{elec from PV}} $$
 
 where:  
 - E_PV, [m] = electricity produced by PV during month **m**.  
-- **Monthly cap** = number of days in the month × 24 × electrolyzer capacity.  
+- **Monthly cap** = number of days in the month × 24 × electrolyzer capacity.
+  MD_elec from PV is the PV electricity that the electrolyzer consumes daily.  
+- M_not claimed is the **excess PV electricity** not consumed.  
+- M_credit represents electricity that was sent to the grid but later claimed as PV-sourced.  
+- M_grid is the electricity taken from the grid if PV is insufficient.  
 
 This allocation ensures that monthly PV electricity consumption does not exceed the electrolyzer's capacity.
 
@@ -119,6 +125,7 @@ $$ D_{\text{credit}} = D_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$
 $$ D_{\text{grid}} = E_{\text{elec, total}} - D_{\text{elec from PV}} $$  
 
 where the **daily cap** is:  
+
 $$ \text{daily cap} = 24 \times \text{electrolyzer capacity} $$  
 
 - D_elec from PV is the PV electricity that the electrolyzer consumes daily.  
