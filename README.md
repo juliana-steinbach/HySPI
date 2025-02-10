@@ -69,28 +69,26 @@ $$ H_{\text{not claimed}} = E_{\text{PV, total}} - E_{\text{elec, direct PV}} $$
 
 where:  
 
-$$ E_{\text{elec, total}} $$ 
-
-= electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
-- \( E_{\text{elec, direct PV}} \) = electricity directly consumed by the electrolyzer from PV (instantaneous consumption)  
-- \( E_{\text{PV, total}} \) = total yearly PV electricity production  
+- E_elec, total = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
+- E_elec, direct PV = electricity directly consumed by the electrolyzer from PV (instantaneous consumption)  
+- E_PV, total = total yearly PV electricity production  
 
 If the electrolyzer needs more electricity than what PV directly provides, the grid supplies the difference. Any excess PV electricity that is not used directly is **not claimed**.
 
 ---
 
 ### 2. Yearly Allocation  
-The **yearly allocation** considers how much electricity can be claimed as PV-sourced over an entire year, including stored and later-used energy.
+The **yearly allocation** considers how much electricity can be claimed as PV-sourced over an entire year.
 
 $$ Y_{\text{elec from PV}} = \min(E_{\text{elec, total}}, E_{\text{PV, total}}) $$  
 $$ Y_{\text{not claimed}} = \max(0, E_{\text{PV, total}} - E_{\text{elec, total}}) $$  
 $$ Y_{\text{credit}} = Y_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$  
 $$ Y_{\text{grid}} = E_{\text{elec, total}} - Y_{\text{elec from PV}} $$  
 
-- \( Y_{\text{elec from PV}} \) is the **total electricity** that can be claimed as PV-sourced.  
-- \( Y_{\text{not claimed}} \) is the **surplus PV electricity** not used by the electrolyzer (can be stored or sold).  
-- \( Y_{\text{credit}} \) is the electricity that was **sent to the grid but later reclaimed** as PV electricity.  
-- \( Y_{\text{grid}} \) is the electricity **taken from the grid** if PV electricity is insufficient.  
+- Y_elec from PV is the **total electricity** that can be claimed as PV-sourced.  
+- Y_not claimed is the **surplus PV electricity** not used by the electrolyzer (can be stored or sold).  
+- Y_credit is the electricity that was **sent to the grid but later reclaimed** as PV electricity.  
+- Y_grid is the electricity **taken from the grid** if PV electricity is insufficient.  
 
 If the PV system produces **more** than what the electrolyzer consumes, the excess is **not claimed**. If PV produces **less**, the grid supplies the difference.
 
@@ -105,7 +103,7 @@ $$ M_{\text{credit}} = M_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$
 $$ M_{\text{grid}} = E_{\text{elec, total}} - M_{\text{elec from PV}} $$  
 
 where:  
-- \( E_{\text{PV, month}}[m] \) = electricity produced by PV during month \( m \).  
+- E_PV, [m] = electricity produced by PV during month **m**.  
 - **Monthly cap** = number of days in the month × 24 × electrolyzer capacity.  
 
 This allocation ensures that monthly PV electricity consumption does not exceed the electrolyzer's capacity.
@@ -123,10 +121,10 @@ $$ D_{\text{grid}} = E_{\text{elec, total}} - D_{\text{elec from PV}} $$
 where the **daily cap** is:  
 $$ \text{daily cap} = 24 \times \text{electrolyzer capacity} $$  
 
-- \( D_{\text{elec from PV}} \) is the PV electricity that the electrolyzer consumes daily.  
-- \( D_{\text{not claimed}} \) is the **excess PV electricity** not consumed.  
-- \( D_{\text{credit}} \) represents electricity that was sent to the grid but later claimed as PV-sourced.  
-- \( D_{\text{grid}} \) is the electricity taken from the grid if PV is insufficient.  
+- D_elec from PV is the PV electricity that the electrolyzer consumes daily.  
+- D_not claimed is the **excess PV electricity** not consumed.  
+- D_credit represents electricity that was sent to the grid but later claimed as PV-sourced.  
+- D_grid is the electricity taken from the grid if PV is insufficient.  
 
 This allocation ensures that the electrolyzer does not **over-claim** PV electricity beyond what is feasible on a **daily basis**.
 
