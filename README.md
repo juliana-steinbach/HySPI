@@ -19,16 +19,6 @@ Users can define key technical parameters for their electrolyzer system, includi
 - **Storage options**
 - **Transport methods**
 
-### Background Data (Scenario Selection)
-Users can select different **energy demand and production scenarios** to model their system within various grid contexts:
-
-- **RTE Demand Scenarios**: **Reference**, **Sobriety**, **Reindustrialization**
-- **RTE Production Scenarios**: **M1**, **M2**, **M23**, **N1**, **N2**, **N03**
-- **Imports Modeling**: **Western Europe market group** / **Neighboring market group**
-- **Integrated Assessment Model (IAM) Applied**:  
-  - **IMAGE SSP2-Base**  
-  - **TIAM-UCL SSP2-RCP45**  
-  - **No IAM applied**
 
 ### Renewable Energy Integration (PV Coupling)
 For projects integrating renewable energy, users can define **PV system characteristics**:
@@ -46,14 +36,24 @@ For projects integrating renewable energy, users can define **PV system characte
 When selecting a **PV-coupled system**, the HySPI calculator retrieves solar data from **PVGIS** (Photovoltaic Geographical Information System) to provide accurate location-based solar potential estimates:
 
 - **Solar radiation database**: **PVGIS-SARAH2**
-- **Available years**: **2018**, **2019**, **2020**
+- **Available years**: **2018**, **2019**, **2020** (avareged data 2018-2020)
 - **Mounting type**: **Fixed**
 - **Slope & Azimuth**: **Optimized**
 - **PV Technology**: **Crystalline silicon**
 - **Installed peak PV power**: **Matches user-defined PV system capacity (MW)**
 - **System loss factor**: **14%**
 
+PVGIS generates average hourly power outputs from the PV system in kWp. This data enables the calculation of how much electricity can be directly consumed by the electrolyzer from the PV system, based on the electrolyzer’s maximum capacity and operational capacity factor. Any remaining electricity required to power the electrolyzer is drawn from the grid. This approach reflects an almost instantaneous consumption of electricity from both the PV system and the grid, providing a real-time view of the electrical flow.
 
+Additionally, a yearly allocation system alternative is used to allocate the total electricity produced by the PV system over the course of a year to the electricity consumed by the electrolyzer within that same year. This method simplifies the calculation by assuming that the PV system can supply electricity to the electrolyzer regardless of when the electricity is produced. In this system, the PV capacity is linked to the electrolyzer's capacity on an annual basis for both production and consumption. This approach is suitable for systems where surplus electricity produced during the summer months, when sunlight and irradiance are more abundant, can be "banked" and used during the winter months, when daylight hours are shorter. 
+
+If constraints are applied to the data, it is possible to calculate the share of electricity drawn from the grid versus the PV system based on credit allocations constrained by monthly or daily time correlations.
+
+The monthly allocation criteria assumes that surplus electricity produced on sunny days can offset the consumption on cloudy days, as long as the total surplus over the month is consumed within the same month. Under this configuration, the summer months, with longer days and more sunlight, will contribute more electricity from the PV system, while the winter months will require greater reliance on grid electricity.
+
+The daily allocation criteria models a system where electricity produced on a given day is allocated to that same day. This method limits the PV credits to sunny days, leaving cloudy days to rely almost entirely on grid electricity.
+
+Once an allocation criteria is selected in the web app, the resulting share of grid and PV electricity consumption is calculated and linked to PV and grid activities. The default PV activity used is based on a 570 kWp open ground multi-Si photovoltaic installation located in France. In the future, the web app will provide a range of PV activity options to better match the proposed system. The grid electricity activity is associated with a background scenario as described later in this README.
 
 ## Allocation Equations
 
@@ -124,11 +124,8 @@ $$ D_{\text{not claimed}} = E_{\text{PV, total}} - D_{\text{elec from PV}} $$
 $$ D_{\text{credit}} = D_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$  
 $$ D_{\text{grid}} = E_{\text{elec, total}} - D_{\text{elec from PV}} $$  
 
-where the **daily cap** is:  
-
-$$ \text{daily cap} = 24 \times \text{electrolyzer capacity} $$  
-
-- D_elec from PV is the PV electricity that the electrolyzer consumes daily.  
+- D_elec from PV is the PV electricity that the electrolyzer consumes daily.
+- **daily cap** = 24 x electrolyzer capacity
 - D_not claimed is the **excess PV electricity** not consumed.  
 - D_credit represents electricity that was sent to the grid but later claimed as PV-sourced.  
 - D_grid is the electricity taken from the grid if PV is insufficient.  
@@ -148,9 +145,22 @@ If PV **overproduces**, there is unclaimed electricity. If PV **underproduces**,
 
 ---
 
-## Notes:
-- This formatting works for **GitHub Pages (with MathJax)** or **Jupyter Notebooks**.  
-- If used in a standard GitHub `README.md`, it will not render properly (consider linking to a separate `.ipynb` file).  
+### Background Data (Scenario Selection)
+Users can select different **energy demand and production scenarios** to model their system within various grid contexts:
+
+- **RTE Demand Scenarios**: **Reference**, **Sobriety**, **Reindustrialization**
+- **RTE Production Scenarios**: **M1**, **M2**, **M23**, **N1**, **N2**, **N03**
+- **Imports Modeling**: **Western Europe market group** / **Neighboring market group**
+- **Integrated Assessment Model (IAM) Applied**:  
+  - **IMAGE SSP2-Base**  
+  - **TIAM-UCL SSP2-RCP45**  
+  - **No IAM applied**
+ 
+The selection made at this point links the ‘market for electricity, low voltage’ activity, located in France, to a different database depending on the choice you make.
+
+It is important to note that applying this activity to the background is a widely accepted methodology for calculating the electricity consumed by the electrolyzer when the grid is the sole electricity source, especially in systems with high capacity factors. This is a common methodology applied to hydrogen production (LCA) for industrial use, where continuous operation is often required.
+
+When renewables are integrated into the system, this approach serves as a proxy for the lack of dynamic data related to prospective grid electricity activities. A more refined method to model electricity consumption by the electrolyzer from the grid would involve understanding which specific technologies are supplying electricity to the grid at the time of consumption. A dynamic, prospective electricity mix model would provide a more accurate representation and is expected to be developed in the future.
 
 
 
