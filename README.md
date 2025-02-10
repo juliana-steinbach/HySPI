@@ -68,7 +68,7 @@ $$ H_{\text{grid}} = \max\left( 0, E_{\text{elec, total}} - E_{\text{elec, direc
 $$ H_{\text{not claimed}} = E_{\text{PV, total}} - E_{\text{elec, direct PV}} $$  
 
 where:  
-- \( $$ E_{\text{elec, total}} $$ \) = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
+- $$ E_{\text{elec, total}} $$ = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
 - \( E_{\text{elec, direct PV}} \) = electricity directly consumed by the electrolyzer from PV (instantaneous consumption)  
 - \( E_{\text{PV, total}} \) = total yearly PV electricity production  
 
