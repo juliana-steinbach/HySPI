@@ -9,11 +9,11 @@ Users can configure their system by selecting options from **foreground data**, 
 ### Foreground Data (User-Specified Parameters)
 Users can define key technical parameters for their electrolyzer system, including:
 
-- **Stack efficiency** / Electricity consumption per kg of hydrogen
+- **Stack efficiency** / **Electricity consumption per kg of hydrogen**
 - **Electrolyzer stack type**: **PEM** / **AEC**
-- **Electrolyzer capacity**: (MW)
-- **Stack lifetime**: (h)
-- **Balance of Plant (BoP) lifetime**: (years)
+- **Electrolyzer capacity** (MW)
+- **Stack lifetime** (h)
+- **Balance of Plant (BoP) lifetime** (years)
 - **Capacity factor**
 - **Photovoltaic (PV) coupled system** (optional)
 - **Storage options**
@@ -36,8 +36,8 @@ For projects integrating renewable energy, users can define **PV system characte
 - **Geographical location**
 - **PV system capacity**: (MW)
 - **Battery coupled**: Yes / No
-- **Battery power capacity**: (MW)
-- **Battery storage capacity**: (MWh)
+- **Battery power capacity** (MW)
+- **Battery storage capacity** (MWh)
 - **Charging efficiency**
 - **Discharging efficiency**
 - **Credit allocation methods**: **Yearly**, **Monthly**, **Daily**, **Hourly**
@@ -68,7 +68,7 @@ $$ H_{\text{grid}} = \max\left( 0, E_{\text{elec, total}} - E_{\text{elec, direc
 $$ H_{\text{not claimed}} = E_{\text{PV, total}} - E_{\text{elec, direct PV}} $$  
 
 where:  
-- \( E_{\text{elec, total}} \) = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
+- \( $$ E_{\text{elec, total}} $$ \) = electrolyzer capacity × capacity factor × 8760 (total yearly electricity required by the electrolyzer)  
 - \( E_{\text{elec, direct PV}} \) = electricity directly consumed by the electrolyzer from PV (instantaneous consumption)  
 - \( E_{\text{PV, total}} \) = total yearly PV electricity production  
 
