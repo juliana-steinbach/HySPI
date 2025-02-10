@@ -46,10 +46,8 @@ When selecting a **PV-coupled system**, the HySPI calculator retrieves solar dat
 PVGIS generates average hourly power outputs from the PV system in kWp. This data enables the calculation of how much electricity can be directly consumed by the electrolyzer from the PV system, based on the electrolyzer’s maximum capacity and operational capacity factor. Any remaining electricity required to power the electrolyzer is drawn from the grid. This approach reflects an almost instantaneous consumption of electricity from both the PV system and the grid, providing a real-time view of the electrical flow.
 
 <div style="text-align: center;">
-  <figure>
-    <img src="https://github.com/user-attachments/assets/c4be4d57-5c35-4871-b671-da70d251fcf6" alt="image" width="50%" />
-    <figcaption> Example of the four allocation criteria options provided by the webapp</figcaption>
-  </figure>
+  <img src="https://github.com/user-attachments/assets/c4be4d57-5c35-4871-b671-da70d251fcf6" alt="image" width="50%" />
+  <p><em>Example of the four allocation criteria options provided by the webapp</em></p>
 </div>
 
 Additionally, a yearly allocation system alternative is used to allocate the total electricity produced by the PV system over the course of a year to the electricity consumed by the electrolyzer within that same year. This method simplifies the calculation by assuming that the PV system can supply electricity to the electrolyzer regardless of when the electricity is produced. In this system, the PV capacity is linked to the electrolyzer's capacity on an annual basis for both production and consumption. This approach is suitable for systems where surplus electricity produced during the summer months, when sunlight and irradiance are more abundant, can be "banked" and used during the winter months, when daylight hours are shorter. 
