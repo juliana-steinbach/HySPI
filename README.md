@@ -112,9 +112,9 @@ $$ M_{\text{credit}} = M_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$
 $$ M_{\text{grid}} = E_{\text{elec, total}} - M_{\text{elec from PV}} $$  
 
 where:  
-- E_PV, [m] = electricity produced by PV during month **m**.  
-- **Monthly cap** = number of days in the month × 24 × electrolyzer capacity.
-  MD_elec from PV is the PV electricity that the electrolyzer consumes daily.  
+- E_PV, month [m] = electricity produced by PV during month **m**.  
+- **monthly cap** = number of days in the month × 24 × electrolyzer capacity.
+- M_elec from PV is the PV electricity that the electrolyzer consumes daily.  
 - M_not claimed is the **excess PV electricity** not consumed.  
 - M_credit represents electricity that was sent to the grid but later claimed as PV-sourced.  
 - M_grid is the electricity taken from the grid if PV is insufficient.  
@@ -132,8 +132,9 @@ $$ D_{\text{credit}} = D_{\text{elec from PV}} - E_{\text{elec, direct PV}} $$
 $$ D_{\text{grid}} = E_{\text{elec, total}} - D_{\text{elec from PV}} $$  
 
 where: 
-- D_elec from PV is the PV electricity that the electrolyzer consumes daily.
+- E_PV, day [d] = electricity produced by PV during day **d**. 
 - **daily cap** = 24 x electrolyzer capacity
+- D_elec from PV is the PV electricity that the electrolyzer consumes daily.
 - D_not claimed is the **excess PV electricity** not consumed.  
 - D_credit represents electricity that was sent to the grid but later claimed as PV-sourced.  
 - D_grid is the electricity taken from the grid if PV is insufficient.  
@@ -149,8 +150,6 @@ The allocation methods define how much electricity is sourced from **PV** and ho
 - **Monthly:** Ensures PV electricity claims do not exceed monthly production.
 - **Daily:** Caps electricity consumption to daily PV availability.
 
-If PV **overproduces**, there is unclaimed electricity. If PV **underproduces**, the grid supplies the difference.
-
 ---
 
 ### Background Data (Scenario Selection)
@@ -164,9 +163,9 @@ Users can select different **energy demand and production scenarios** to model t
   - **TIAM-UCL SSP2-RCP45**  
   - **No IAM applied**
  
-The selection made at this point links the ‘market for electricity, low voltage’ activity, located in France, to a different database depending on the choice you make.
+The selection made at this point links the ‘market for electricity, low voltage’ activity, located in France, to a different database depending on the user's choice. The market represents an yearly avarage grid data normalized into a 1kWh activity.
 
-It is important to note that applying this activity to the background is a widely accepted methodology for calculating the electricity consumed by the electrolyzer when the grid is the sole electricity source, especially in systems with high capacity factors. This is a common methodology applied to hydrogen production (LCA) for industrial use, where continuous operation is often required.
+It is important to note that applying this activity to the background is a widely accepted methodology for calculating the electricity consumed by the electrolyzer when the grid is the sole electricity source, especially in systems with high capacity factors as shown in Figure 2. This is the prevalent methodology applied to hydrogen production for industrial use, where continuous operation is often required.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/ab5a91b4-a244-4edd-afd2-8da682a22b37" alt="image" width="80%">
@@ -175,7 +174,7 @@ It is important to note that applying this activity to the background is a widel
 <p align="center"><em>Fig. 2 Continuous operation mode with electricity provided by the grid</em></p>
 
 
-When renewables are integrated into the system, this approach serves as a proxy for the lack of dynamic data related to prospective grid electricity activities. A more refined method to model electricity consumption by the electrolyzer from the grid would involve understanding which specific technologies are supplying electricity to the grid at the time of consumption. A dynamic, prospective electricity mix model would provide a more accurate representation and is expected to be developed in the future.
+When renewables are integrated into the system, the use of yearly avaraged grid data serves as a proxy for the lack of dynamic data related to prospective grid electricity activities. A more refined method to model electricity consumption by the electrolyzer from the grid would involve understanding which specific technologies are supplying electricity to the grid at the time of consumption. A dynamic, prospective electricity mix model would provide a more accurate representation and is expected to be developed in the future.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/2aa2762b-815a-4a4b-b849-dccedda06455" alt="image" width="80%">
@@ -186,10 +185,10 @@ When renewables are integrated into the system, this approach serves as a proxy 
 
 This repository provides comprehensive instructions for setting up the required environments to host the necessary libraries for each stage of web app development. It includes:
 
-- The code used to extract databases from Premise
-- Inventories for Hydrogen systems using PEM and AEC technologies
-- Inventory data for electricity modeling in neighboring countries
-- The integration code linking the computational LCA (Life Cycle Assessment) model with the Streamlit-based web interface to enhance usability
+- The code used to extract databases from Premise;
+- Inventories for Hydrogen systems using PEM and AEC technologies;
+- Inventory data for the French electricity modeling using a market from neighboring countries;
+- The integration code linking the computational LCA (Life Cycle Assessment) model with the Streamlit-based web interface to enhance usability.
 
 Additionally, a simplified version of the web app is available as Jupyter Notebooks, offering an alternative approach to generating results using parameterized values instead of user selections.
 
