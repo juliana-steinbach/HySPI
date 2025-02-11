@@ -1,0 +1,21 @@
+name: streamlit_lca_algebraic_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - streamlit
+  - pandas
+  - matplotlib
+  - folium
+  - opencage
+  - streamlit-folium
+  - lca_algebraic
+  - pip
+  - pip:
+      - streamlit-extras
+      - lib
+  - dataclasses
+  - io
+  - urllib3
+  - cache_data
