@@ -168,7 +168,7 @@ The selection made at this point links the ‘market for electricity, low voltag
 It is important to note that applying this activity to the background is a widely accepted methodology for calculating the electricity consumed by the electrolyzer when the grid is the sole electricity source, especially in systems with high capacity factors as shown in Figure 2. This is the prevalent methodology applied to hydrogen production for industrial use, where continuous operation is often required.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ab5a91b4-a244-4edd-afd2-8da682a22b37" alt="image" width="80%">
+  <img src="https://github.com/user-attachments/assets/ab5a91b4-a244-4edd-afd2-8da682a22b37" alt="image" width="50%">
 </p>
 
 <p align="center"><em>Fig. 2 Continuous operation mode with electricity provided by the grid</em></p>
@@ -177,20 +177,11 @@ It is important to note that applying this activity to the background is a widel
 When renewables are integrated into the system, the use of yearly avaraged grid data serves as a proxy for the lack of dynamic data related to prospective grid electricity activities. A more refined method to model electricity consumption by the electrolyzer from the grid would involve understanding which specific technologies are supplying electricity to the grid at the time of consumption. A dynamic, prospective electricity mix model would provide a more accurate representation and is expected to be developed in the future.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2aa2762b-815a-4a4b-b849-dccedda06455" alt="image" width="80%">
+  <img src="https://github.com/user-attachments/assets/2aa2762b-815a-4a4b-b849-dccedda06455" alt="image" width="50%">
 </p>
 
 <p align="center"><em>Fig. 3 Continuous operation mode with electricity provided by the grid and PV system</em></p>
 
-
-This repository provides comprehensive instructions for setting up the required environments to host the necessary libraries for each stage of web app development. It includes:
-
-- The code used to extract databases from Premise;
-- Inventories for Hydrogen systems using PEM and AEC technologies;
-- Inventory data for the French electricity modeling using a market from neighboring countries;
-- The integration code linking the computational LCA (Life Cycle Assessment) model with the Streamlit-based web interface to enhance usability.
-
-Additionally, a simplified version of the web app is available as Jupyter Notebooks, offering an alternative approach to generating results using parameterized values instead of user selections.
 
 
 
