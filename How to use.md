@@ -13,6 +13,13 @@ There are several steps to be completed before lauching this webapp. Three envir
 
 ```bash
 conda env create -f environment_premise.yml
+```
+```bash
+conda env create -f environment_lca_algebraic.yml
+```
+```bash
+conda env create -f environment_streamlit.yml
+```
 
 First you need to create a brightway project. This can be done using brightway2, which is installed alongside the two libraries required in this repo, premise and lca_algebraic.
 
