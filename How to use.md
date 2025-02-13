@@ -21,13 +21,9 @@ conda env create -f environment_lca_algebraic.yml
 conda env create -f environment_streamlit.yml
 ```
 
-First you need to create a brightway project. This can be done using brightway2, which is installed alongside the two libraries required in this repo, premise and lca_algebraic. Here we will demonstrate how to create the project using premise environment:
+First you need to create a brightway project. This can be done using brightway2, which is installed alongside the two libraries required in this repo, premise and lca_algebraic. 
 
-Activate your premise environment:
-
-```bash
-conda activate environment_premise
-```
+The instructions to create the brightway project, download ecoinvent and
 
 
 Once ecoinvent is loeaded into your project you can transform the database according to the IAM scenarios available in Premise. To do this transformation you can use the same notebook used previously
