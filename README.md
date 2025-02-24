@@ -182,6 +182,8 @@ When renewables are integrated into the system, the use of yearly avaraged grid 
 
 <p align="center"><em>Fig. 3 Continuous operation mode with electricity provided by the grid and PV system</em></p>
 
+---
+
 ### French electricity grid
 
 The grid electricity used in this assessment was developed in a separate repository, "Repo Name". This repository focuses on modeling RTE scenarios based on the Futurs Énergétiques 2050 report and can be accessed as an external scenario using Premise.
