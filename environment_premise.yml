@@ -6,3 +6,4 @@ dependencies:
   - python=3.11
   - premise[bw2]
   - pip
+  - jupyter
