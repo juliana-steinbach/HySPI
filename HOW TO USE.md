@@ -41,7 +41,7 @@ jupyter notebook
 - Check the databases
 - Delete any database if needed
 
-  All files necessary to load the databases and inventories are available in this repo except the Ecoinvent database and Premise key that should be requested at the Premise repo: [https://github.com/polca/premise_gwp?utm_source=chatgpt.com](https://github.com/polca/premise_gwp)
+  All files necessary to load the databases and inventories are available in this repo except the Ecoinvent database and Premise key that should be requested at the Premise repo: https://github.com/polca/premise
 
 4) Once all databases have been loaded into the project we recommend that you get familiarized with the LCA calculation before diving into the web app. For this you will have to activate your Lca_algebraic environment and open jupyter notebook:
 
