@@ -4,7 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.11
-  - pip  # Ensure pip is installed
+  - pip 
   - jupyter
   - pandas
   - matplotlib
