@@ -24,7 +24,7 @@ conda env create -f environment_streamlit.yml
 1) The First step you need to follow is activating your premise environment and opening a Jupyter notebook.
 
 ```bash
-activate environment_premise
+activate premise_env
 ```
 ```bash
 jupyter notebook
@@ -46,7 +46,7 @@ jupyter notebook
 4) Once all databases have been loaded into the project we recommend that you get familiarized with the LCA calculation before diving into the web app. For this you will have to activate your Lca_algebraic environment and open jupyter notebook:
 
 ```bash
-activate environment_lca_algebraic
+activate lca_algebraic_env
 ```
 ```bash
 jupyter notebook
@@ -59,7 +59,7 @@ jupyter notebook
 - Ensure it is connected to the correct environment that includes Streamlit and all necessary dependencies by following these steps:
    - Go to Settings > Project: Home.py > Python Interpreter
    - Click Add Interpreter > Select Existing
-   - Choose Type: Conda and select the appropriate environment (environment_streamlit)
+   - Choose Type: Conda and select the appropriate environment (streamlit_env)
 
 You can also open Calculator.py, utils.py, and settings.py to understand their roles in the app.
 
