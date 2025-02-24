@@ -4,11 +4,12 @@ channels:
   - defaults
 dependencies:
   - python=3.11
-  - lca_algebraic
-  - pip
+  - pip  # Ensure pip is installed
   - jupyter
   - pandas
   - matplotlib
   - seaborn
   - numpy
   - six
+  - pip:
+    - lca_algebraic
