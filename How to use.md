@@ -29,23 +29,19 @@ activate environment_premise
 ```bash
 jupyter notebook
 ```
-2) In Jupyter notebook open the file 'Project creation + biosphere + ecoinvent.ipynb'. This file contains instructions to:
+2) In Jupyter notebook open the file 'Premise scenarios.ipynb'. This file contains instructions to:
 
 - Create a brightway project
 - Load the ecoinvent 3.9.1 on it
 - Load the biosphere database
-- Check the databases
-- Load the database that adapts RTE scenarios using ecoinvent
-- Load the LCI used in the foreground containing stacks and balance of plant data
-
-3) Once ecoinvent and biosphere were loaded into the project, it is time to load the databases that modelled the RTE scenarios using AIMs. Open the file 'Premise scenarios.ipynb'. This file contains instructions to:
-
-- Open the brightway project created previously
 - Load the databases according to Image, Tiam-UCL or any IAMs you find relevant for your project
+- Load a Premise inventory without applying IAM (Premise no updates)
+- Load the LCI used in the foreground containing stacks and balance of plant data (AEC/PEM)
+- Load the database that adapts RTE scenarios using ecoinvent and Premise inventories (RTE scenarios neighbouring imports)
 - Check the databases
 - Delete any database if needed
 
-4) Once all databases have been loaded into the project we recommend that you get familiarized with the LCA calculation before diving into the web app. For this you will have to activate your LCA_algebraic environment and open jupyter notebook:
+4) Once all databases have been loaded into the project we recommend that you get familiarized with the LCA calculation before diving into the web app. For this you will have to activate your Lca_algebraic environment and open jupyter notebook:
 
 ```bash
 activate environment_lca_algebraic
@@ -53,17 +49,26 @@ activate environment_lca_algebraic
 ```bash
 jupyter notebook
 ```
-5) In jupyter notebook open the file Parametrized assessment.ipynb. This file contains the same sequence of code used in the web app for the LCA calculation. Run the code adapting project and database names. This LCA calculation provides a parametrized view of the results, and this can give you an idea regarding the uncerntainties of the model and which activities play the most and the least important role in the assessment.
+5) In Jupyter Notebook, open the file "Parametrized model and LCA.ipynb". This notebook features a parameterized Life Cycle Assessment (LCA) for both the foreground and background systems. It provides the necessary components to construct an OAT matrix and perform Global Sensitivity Analysis (GSA) using Monte Carlo simulations, available with the lca_algebraic library. Additionally, it includes a similar code implementation to that used in the web application for LCA assessment, integrating a photovoltaic plant into the hydrogen system and generating an LCA results matrix based on various RTE scenario models and IAM applications, as well as different PV credit allocation.
    
-6) Once you are familirized with the LCA part, you can see how the assessment was adapated to the streamlit web app. We recommend the use of Pycharm to run the streamlit code. In pycharm, open the file Home.py and make sure it is conected to the environment that contains streamlite and the other dependencies, this can be done by:
+6) Once you are familiar with the LCA process, you can explore how the assessment has been adapted for the Streamlit web app. We recommend using PyCharm to run the Streamlit code.
 
-- Opening the file Home.py and go into Settings >> Project: Home.py >> Python interpreter >> add interpreter >> Select existing >> Type: Conda >> Choose the environment_streamlit.
-- You can also open the files Calculator.py, utils.py and settings.py.
-- To run the web app make sure the pycharm terminal is in the same directory that you project is locates, in case it is not use:
+- Open PyCharm and navigate to the file Home.py.
+- Ensure it is connected to the correct environment that includes Streamlit and all necessary dependencies by following these steps:
+   - Go to Settings > Project: Home.py > Python Interpreter
+   - Click Add Interpreter > Select Existing
+   - Choose Type: Conda and select the appropriate environment (environment_streamlit)
+
+You can also open Calculator.py, utils.py, and settings.py to understand their roles in the app.
+
+- Ensure that the PyCharm terminal is in the correct project directory. If not, navigate to it using:
 
 ```bash
 cd path_to_project_file
 ```
-Once you are in the right directory you can run streamlit by typing Streamlit run Home.py
+Once in the correct directory, start Streamlit by running:
 
-and voile la!
+```bash
+streamlit run Home.py
+```
+And voilà! 🚀 Your web app should now be up and running.
