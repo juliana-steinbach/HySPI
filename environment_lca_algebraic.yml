@@ -6,3 +6,9 @@ dependencies:
   - python=3.11
   - lca_algebraic
   - pip
+  - jupyter
+  - pandas
+  - matplotlib
+  - seaborn
+  - numpy
+  - six
