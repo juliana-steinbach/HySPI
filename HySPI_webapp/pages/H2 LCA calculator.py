@@ -218,20 +218,28 @@ def show():
                 st.markdown("---")
 
                 # Battery system
+                eff_charge = 0.867 #square root of 75%
+                eff_discharge = 0.867
                 battery_power_capacity_MW = col1.number_input("Battery power capacity (MW):", value=5.0, min_value=0.0,
-                                                              step=0.01)
+                                                              step=1.0)
                 battery_power_capacity_W = battery_power_capacity_MW * 1_000_000  # Convert to watts
 
-                eff_charge = col1.number_input("Charging efficiency:", value=0.98, min_value=0.0, max_value=1.0,
-                                                              step=0.01)
+                col1.number_input(
+                    "Round-trip efficiency:", value= 0.75, disabled=True
+                )
 
                 # Define storage capacity in Wh (20 MWh)
-                battery_storage_capacity_MWh = col2.number_input("Battery storage capacity (MWh):", value=20.0,
-                                                                 min_value=0.0, step=0.1)
+                # Compute storage capacity as 6 times power capacity
+                battery_storage_capacity_MWh = battery_power_capacity_MW * 6
                 battery_storage_capacity_Wh = battery_storage_capacity_MWh * 1_000_000  # Convert to watt-hours
 
-                eff_discharge = col2.number_input("Discharging efficiency:", value=0.98, min_value=0.0, max_value=1.0,
-                                               step=0.1)
+                # Compute storage capacity as 6 times power capacity
+                battery_storage_capacity_MWh = battery_power_capacity_MW * 6
+
+                # Display storage capacity as a non-editable field with better styling
+                col2.text_input(
+                    "Battery storage capacity (MWh):", value=f"{battery_storage_capacity_MWh:.2f}", disabled=True
+                )
 
                 # Process each row to manage battery charging/discharging
                 for index, row in df.iterrows():
@@ -269,7 +277,7 @@ def show():
                 'PV Credit': [y_credit / 1_000_000, m_credit / 1_000_000, d_credit / 1_000_000, 0],
                 # No PV credit for hourly
                 'PV non claimed': [y_not_claimed_elec / 1_000_000, m_not_claimed_elec / 1_000_000,
-                                   d_not_claimed_elec / 1_000_000, h_not_claimed_elec / 1_000_000],
+                                   d_not_claimed_elec / 1_000_000, (h_not_claimed_elec- elec_from_battery_to_electro_Wh) / 1_000_000],
                 'PV Actual': [max_direct_pv_consumption_by_electro / 1_000_000] * 4,
                 'PV due to battery storage': [0, 0, 0,
                                               elec_from_battery_to_electro_Wh / 1_000_000 if battery_coupling == "Yes" else 0]
@@ -337,11 +345,13 @@ def show():
                         "Electrolyzer's total consumption",
                         "PV production",
                         "Electrolyzer's direct consumption from PV",
+                        "Electricity supplied by the battery (from PV)"
                     ],
                     "Value (MWh)": [
                         f"{total_elec_consumed_by_electro_Wh / 1_000_000:.2f}",
                         f"{y_elec_production_from_PV_Wh / 1_000_000:.2f}",
                         f"{max_direct_pv_consumption_by_electro / 1_000_000:.2f}",
+                        f"{elec_from_battery_to_electro_Wh / 1_000_000:.2f}"
                     ]
                 }
                 df = pd.DataFrame(e_data)
@@ -677,7 +687,7 @@ def show():
         with expander:
             st.markdown(summary_text)
 
-        expander = st.expander("Usefull information")
+        expander = st.expander("Hydrogen and electricity information")
         with expander:
             with st.container():
                 paragraph = (

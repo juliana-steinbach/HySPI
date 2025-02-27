@@ -26,6 +26,7 @@ class UserInput :
     grid_market : str = None
     n_tanks : int = 0
     electricity : float = 0
+    battery_coupling : bool = 0
 
 
 @dataclass
@@ -127,7 +128,7 @@ def compute_intermediate(p:UserInput) :
 
     res.E1 = round(res.Electricity_consumed_kWh / res.H2_produced, 2)
 
-    res.n_stacks = (res.BoP_LT_h / p.stack_LT) #*res.electro_capacity_MW
+    res.n_stacks = res.BoP_LT_h / (p.stack_LT*p.cf)
 
     return res
 
@@ -196,14 +197,19 @@ def compute_lca(p:UserInput, ir:IntermediateResult, data_grid, data_pv) :
 
 
     # PV activity: This is the PV activity used for the foreground system when H2 is powered by PV
-    PV_TB = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",
-                             loc="FR", db_name="TI_SSP2_Base_Ref_N1")
-    PV_T45 = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",
-                              loc="FR", db_name="TI_SSP2_RCP45_Ref_N1")
-    PV_IB = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",
-                             loc="FR", db_name="IM_SSP2_Base_Ref_N1")
-    PV_NI = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si updated",
-                             db_name='RTE scenarios neighbouring imports')  # updated activity
+    PV_T45 = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",db_name="TI_SSP2_RCP45_Ref_N1", loc="FR")
+    PV_TB= agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",db_name="TI_SSP2_Base_Ref_N1", loc="FR")
+    PV_IB = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si",db_name="IM_SSP2_Base_Ref_N1", loc="FR")
+    PV_NI = agb.findActivity("electricity production, photovoltaic, 570kWp open ground installation, multi-Si updated",db_name='RTE scenarios neighbouring imports')  # updated activity
+
+    # Battery activity extracted from FE2050 OIE PSI modelling
+    B_Sys = agb.findActivity("vanadium-redox flow battery system assembly, 8.3 megawatt hour", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+    B_Stack = agb.findActivity("vanadium-redox flow battery stack assembly", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+    B_T_Sys = agb.findActivity("treatment of stack, for VRFB system", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+    B_T_T = agb.findActivity("treatment of electrolyte tank, for VRFB system", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+    B_T_S = agb.findActivity("treatment of electrolyte solution, for VRFB system", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+    B_T_P = agb.findActivity("treatment of periphericals, for VRFB system", db_name="TI_SSP2_RCP45_Ref_N1", loc="RER")
+
 
     # Biosphere:
     water_H2 = agb.findBioAct("Water, unspecified natural origin", categories=('natural resource', 'in ground'))
@@ -225,12 +231,6 @@ def compute_lca(p:UserInput, ir:IntermediateResult, data_grid, data_pv) :
                                 "no activity, or zero impact activity",  # Name of the activity
                                 "unit",  # Unit
                                 exchanges={})
-
-    def negAct(act):
-        """Correct the sign of some activities that are accounted as negative in brightway. """
-        return agb.newActivity(USER_DB, act["name"] + "_neg", act["unit"], {
-            act: -1,
-        })
 
     # Electrolyzer selection:
     activity_names = {
@@ -324,8 +324,20 @@ def compute_lca(p:UserInput, ir:IntermediateResult, data_grid, data_pv) :
 
     production = define_production()
 
-    # land factors retrieved from Romain's LCI: no information was given regarding the references for these figures: *ask him!
-    land_factor = 0.09 if p.stack_type == 'PEM' else 0.12
+    def define_bat():
+        return agb.newActivity(USER_DB, "infrastructure end of life for H2 production",
+                               unit="unit",
+                               exchanges={
+                                    B_Sys:1,
+                                    B_Stack:1,
+                                    B_T_Sys:-20,
+                                    B_T_T:-32.5,
+                                    B_T_S:-272,
+                                    B_T_P:-5,
+                               })
+
+
+    bat = define_bat()
 
 
     # Infrastructure eol
@@ -339,6 +351,9 @@ def compute_lca(p:UserInput, ir:IntermediateResult, data_grid, data_pv) :
 
 
     eol = define_eol()
+
+    # land factors retrieved from Romain's LCI: no information was given regarding the references for these figures: *ask him!
+    land_factor = 0.09 if p.stack_type == 'PEM' else 0.12
 
 
     # Infrastructure
@@ -380,7 +395,8 @@ def compute_lca(p:UserInput, ir:IntermediateResult, data_grid, data_pv) :
                            exchanges={
                                production: 1,
                                infra: 1,
-                               storage: 1
+                               storage: 1,
+                               bat: (battery_power_capacity_MW*elec_from_battery_to_electro_Wh/49000)/ir.H2_produced if p.battery_coupling == "Yes" else 0 #battery_power_capacity_MW is equivalent to the number of battery units as the battery activity considers a 1MW unit
                            })
 
     result_table_H2 = agb.compute_impacts(
