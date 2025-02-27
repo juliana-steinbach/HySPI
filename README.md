@@ -59,7 +59,7 @@ The monthly allocation criteria assumes that surplus electricity produced on sun
 
 The daily allocation criteria models a system where electricity produced on a given day is allocated to that same day. This method limits the PV credits to sunny days, leaving cloudy days to rely almost entirely on grid electricity.
 
-Once an allocation criteria is selected in the web app, the resulting share of grid and PV electricity consumption is calculated and linked to PV and grid activities. The default PV activity used is based on a 570 kWp open ground multi-Si photovoltaic installation located in France. In the future, the web app will provide a range of PV activity options to better match the proposed system. The grid electricity activity is associated with a background scenario as described later in this README.
+Once an allocation criteria is selected in the web app, the resulting share of grid and PV electricity consumption is calculated and linked to PV and grid activities. The default PV activity used is based on a 570 kWp open ground multi-Si photovoltaic installation located in France. 
 
 ## Allocation Equations
 
@@ -153,14 +153,20 @@ The allocation methods define how much electricity is sourced from **PV** and ho
 ---
 
 ### Background Data (Scenario Selection)
+
+The grid electricity activity is associated with a background scenario extracted from RTE_scenarios repository developed by O.I.E. Mines Paristech. This repo focuses on modeling RTE scenarios based on the Futurs Énergétiques 2050 report and can be extracted as an external scenario using Premise.
+
+For more details on the grid modeling methodology refer to: https://github.com/oie-mines-paristech/RTE_scenarios
+
 Users can select different **energy demand and production scenarios** to model their system within various grid contexts:
 
 - **RTE Demand Scenarios**: **Reference**, **Sobriety**, **Reindustrialization**
 - **RTE Production Scenarios**: **M1**, **M2**, **M23**, **N1**, **N2**, **N03**
 - **Imports Modeling**: **Western Europe market group** / **Neighboring market group**
-- **Integrated Assessment Model (IAM) Applied**:  
+- **Integrated Assessment Model (IAM) Applied**:
+  - **TIAM-UCL SSP2-RCP45**
+  - **TIAM-UCL SSP2-Base** 
   - **IMAGE SSP2-Base**  
-  - **TIAM-UCL SSP2-RCP45**  
   - **No IAM applied**
  
 The selection made at this point links the ‘market for electricity, low voltage’ activity, located in France, to a different database depending on the user's choice. The market represents an yearly avarage grid data normalized into a 1kWh activity.
@@ -184,11 +190,15 @@ When renewables are integrated into the system, the use of yearly avaraged grid 
 
 ---
 
-### French electricity grid
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b18a7a77-7887-4b03-af33-8749793f9af2" alt="image" width="50%">
+</p>
 
-The grid electricity used in this assessment was developed in a separate repository, "Repo Name". This repository focuses on modeling RTE scenarios based on the Futurs Énergétiques 2050 report and can be accessed as an external scenario using Premise.
+<p align="center"><em>Fig. 4 Implementation of a battery to the PV/Hydrogen system</em></p>
 
-For more details on the modeling process, refer to: "link"
+---
+
+
 
 
 
